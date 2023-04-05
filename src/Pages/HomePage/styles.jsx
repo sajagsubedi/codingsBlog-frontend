@@ -61,7 +61,7 @@ export const HeroPara = styled.p`
 
 export const Blogs = styled.section`
   position: relative;
-  top: -50vh;
+  top: -40vh;
   z-index: 2;
   width: 75vw;
   display: flex;
@@ -72,7 +72,6 @@ export const Blogs = styled.section`
   color: white;
   border-radius: 20px;
   @media (max-width: ${({ theme }) => theme.resposiveBreakPoints.mobile}) {
-    top: -40vh;
     min-height: 50vh;
     width: 90vw;
   }
