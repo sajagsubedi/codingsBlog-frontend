@@ -78,4 +78,7 @@ list-style:none;
   font-size:2rem;
   border:none;
 }
+.date{
+color:gray;
+}
  `
