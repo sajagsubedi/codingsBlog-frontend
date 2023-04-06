@@ -80,5 +80,6 @@ list-style:none;
 }
 .date{
 color:gray;
+font-size:.9rem;
 }
  `
