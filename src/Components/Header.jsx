@@ -1,10 +1,11 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { BlogContext } from "../context/index";
+import { BlogContext,ComponentContext } from "../context/index";
 import { AiOutlineSearch } from "react-icons/ai";
 import { RiArrowDropDownLine } from "react-icons/ri";
 const Header = () => {
   const { setQuery, query, getBlogs } = useContext(BlogContext);
+  const {showAlert} = useContext(ComponentContext)
   const navigate = useNavigate();
   const offFunc = () => {
     const navigation = document.getElementById("navigation");
@@ -24,6 +25,7 @@ const Header = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("isAdmin");
     navigate("/");
+    showAlert("Logged out successfully","success")
   };
   useEffect(HeaderOff, []);
   const handleSearchChange = (e) => {

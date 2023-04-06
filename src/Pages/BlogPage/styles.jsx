@@ -44,3 +44,38 @@ export const BlogPage = styled.section`
   font-size:1.5rem;
   }
  }`;
+ 
+ export const Comments=styled.section`
+ width:80vw;
+ margin:10px auto;
+ display:flex;
+ color:white;
+ flex-direction:column;
+ .commentLists{
+
+ }
+ .commentLists ul li{
+list-style:none;
+ }
+.addNote{
+  width:100%;
+  display:flex;
+  justify-content:center;
+  gap:5px;
+}
+.commentList h3{
+  font-size:1.5rem;
+}
+.commentList p{
+  font-size:1.3rem;
+}
+.PrimaryInput{
+  width:100%;
+}
+.sendBTN{
+  background:transparent;
+  color:white;
+  font-size:2rem;
+  border:none;
+}
+ `

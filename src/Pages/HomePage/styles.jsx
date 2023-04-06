@@ -96,7 +96,7 @@ export const BlogItem = styled.div`
     color: gray;
   }
   .BlogTitle {
-    font-size: 1.7rem;
+    font-size: 2rem;
     font-weight: bold;
     font-family: "Anybody", cursive;
   }
@@ -110,16 +110,16 @@ export const BlogItem = styled.div`
   }
   .blogSubTitle {
     color: ${({ theme }) => theme.colors.secondaryTheme};
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     font-family: "Lato", sans-serif;
   }
   .BlogDescription {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     text-align: justify;
     font-family: "Lato", sans-serif;
   }
   .paragraphSection .linkToBlog {
-    font-size: 1rem;
+    font-size: 1.5rem;
     text-decoration: none;
     color: ${({ theme }) => theme.colors.sptxt};
     font-family: "sans-serif";

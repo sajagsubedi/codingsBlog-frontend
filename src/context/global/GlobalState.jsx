@@ -3,10 +3,11 @@ import GlobalContext from "./GlobalContext";
 import { theme } from "../../styles/Theme";
 
 export default function GlobalState(props) {
-  const host = "https://codings-blog-backend-2mqjv0ec4-sajagsubedi03.vercel.app";
+  const host = "http://localhost:5000";
   const categories = ["general", "Webdevelopment", "Cryptography"];
   const [progress, setProgress] = useState(0);
   const [loading, setLoading] = useState(true);
+
   return (
     <GlobalContext.Provider
       value={{

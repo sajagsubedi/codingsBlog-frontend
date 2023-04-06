@@ -9,10 +9,12 @@ import {
 } from "../../../context/index";
 
 export default function BlogSection(props) {
-  const { blogs, getBlogs, category, setCategory } = useContext(BlogContext);
+  const { blogs, getBlogs, category, setCategory,setQuery,query } = useContext(BlogContext);
   const { changeManipulatebox, initialValue } = useContext(ComponentContext);
   const { loading, isAdmin } = useContext(GlobalContext);
+  
   useEffect(() => {
+    window.scrollTo(0, 0);
     setCategory(props.category);
   }, [props.category]);
   useEffect(() => {

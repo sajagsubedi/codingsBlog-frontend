@@ -8,6 +8,8 @@ export default function BlogState(props) {
   const { showAlert } = useContext(ComponentContext);
   const [globalBlogs, setGlobalBlogs] = useState({ blogs: [] });
   const [query, setQuery] = useState("");
+  const [comments, setComments] = useState([]);
+  const [commentDescription, setCommentDescription] = useState("");
 
   //function to fetch blogs
   const getBlogs = async () => {
@@ -49,7 +51,7 @@ export default function BlogState(props) {
       },
     });
     response = await response.json();
-    showAlert(response.msg, success?"success":"error");
+    showAlert(response.msg, success ? "success" : "error");
     let upadatedBlogs = blogs.blogs.map((myBlog) => {
       if (myBlog._id == id) {
         return response.blog;
@@ -91,6 +93,32 @@ export default function BlogState(props) {
     let newBlogs = blogs.blogs.filter((blog) => blog._id !== id);
     setBlogs({ ...blogs, blogs: newBlogs });
   };
+  // function to fetch comments
+  const fetchComments = async (blogId) => {
+    setLoading(true);
+    let response = await fetch(`${host}/api/comment/getcomments/${blogId}`);
+    response = await response.json();
+    setComments(response.comments);
+    setLoading(false);
+  };
+
+  // function to send Comment
+  const addComment = async (blogId) => {
+    let response = await fetch(`${host}/api/comment/add/${blogId}`, {
+      method: "POST",
+      body: JSON.stringify({ description: commentDescription }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+        auth_token: localStorage.getItem("token"),
+      },
+    });
+    response = await response.json();
+
+    if (!response.success) {
+      return showAlert(response.msg, "Error");
+    }
+    setComments(comments.concat(response.comment));
+  };
   return (
     <BlogContext.Provider
       value={{
@@ -105,6 +133,11 @@ export default function BlogState(props) {
         setQuery,
         category,
         setCategory,
+        comments,
+        fetchComments,
+        commentDescription,
+        setCommentDescription,
+        addComment,
       }}
     >
       {props.children}
