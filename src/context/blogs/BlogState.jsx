@@ -119,6 +119,7 @@ export default function BlogState(props) {
     }
     setComments(comments.concat(response.Comment));
     showAlert(response.msg,"success")
+    setCommentDescription("")
   };
   return (
     <BlogContext.Provider
