@@ -117,7 +117,8 @@ export default function BlogState(props) {
     if (!response.success) {
       return showAlert(response.msg, "Error");
     }
-    setComments(comments.concat(response.comment));
+    setComments(comments.concat(response.Comment));
+    showAlert(response.msg,"success")
   };
   return (
     <BlogContext.Provider
