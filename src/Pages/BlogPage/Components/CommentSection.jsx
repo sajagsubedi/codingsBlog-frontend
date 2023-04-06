@@ -34,6 +34,7 @@ export default function CommentSection({blogId}) {
             <div className="commentList">
                 <h3>{data.username}</h3>
                 <p>-{data.description}</p>
+                <p>-{new Date(data.date).toDateString()}</p>
             </div>
           </li>
           )
