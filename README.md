@@ -1,6 +1,6 @@
 # Codingsblog
 
-Codingsblog is a blog website that provides users with the latest information on coding, programming, and development. The website is built using modern technologies like ReactJS, NodeJS, and MongoDB, providing users with a seamless and enjoyable experience.
+[codingsBlog](https://codingsblog.netlify.app/) is a blog website that provides users with the latest information on coding, programming, and development. The website is built using modern technologies like ReactJS, NodeJS, and MongoDB, providing users with a seamless and enjoyable experience.
 
 ## Features
 
