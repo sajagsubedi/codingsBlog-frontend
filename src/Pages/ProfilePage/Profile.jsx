@@ -8,10 +8,9 @@ export default function Profile() {
   const { user, fetchProfile } = useContext(AuthContext);
   useEffect(() => {
     fetchProfile();
-    console.log
   }, []);
   return (
-    <ProfileSection>
+    <ProfileSection className="globalSection">
       <div className="infoDiv">
       <h1 className="mainText">Your Profile</h1>
   <div className="infofield">

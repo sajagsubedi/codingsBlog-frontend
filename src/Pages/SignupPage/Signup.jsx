@@ -1,28 +1,27 @@
 import { useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/index";
 import { FormSection } from "../../styles/CommonStyles";
 
 const Signup = () => {
   const { signup } = useContext(AuthContext);
+  const navigate=useNavigate()
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
   });
-  const navigate = useNavigate();
-
   //function to handle change in formdata
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   //function to  handleSubmit and signup
-  const handleSubmit = async (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    const resp = await signup(formData);
-    if (resp) {
-      navigate("/");
-    }
+   let resp= await signup(formData);
+   if(resp){
+    navigate("/")
+   }
   };
   return (
     <FormSection>
@@ -84,7 +83,11 @@ const Signup = () => {
           />
         </div>
         <button
-          disabled={formData.name<5||formData.password.length < 5 || formData.email < 5}
+          disabled={
+            formData.name < 5 ||
+            formData.password.length < 5 ||
+            formData.email < 5
+          }
           onClick={handleSubmit}
           className="PrimaryButton"
         >

@@ -3,7 +3,7 @@ import styled from "styled-components"
 export const ProfileSection=styled.section`
 width:80vw;
 margin:auto;
-backgound:${({theme})=>theme.colors.themecolor};
+background:${({theme})=>theme.colors.themecolor};
 .infoDiv{
     border:none;
     border-radius:10px;
@@ -13,7 +13,7 @@ backgound:${({theme})=>theme.colors.themecolor};
     flex-direction:column;
     box-shadow: 0 25px 10px ${({ theme }) => theme.colors.blackShade};
     background:${({theme})=>theme.colors.focus};
-    color:white;
+    color:${({theme})=>theme.colors.normalTxt};
     padding:10px;
 }
 .infoDiv h1{

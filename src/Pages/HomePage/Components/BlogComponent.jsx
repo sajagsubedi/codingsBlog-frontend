@@ -1,18 +1,26 @@
-import { useContext } from "react";
+import { useContext,useEffect } from "react";
 import { BsArrowRight } from "react-icons/bs";
 import { BlogItem } from "../styles";
 import { Link } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
 import { CiEdit } from "react-icons/ci";
 import { BlogContext, ComponentContext } from "../../../context/index";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export default function BlogComponent({ blogData }) {
   let { _id, Title, SubTitle, Description, imgUrl, publishedAt, category } =
     blogData;
   const { deleteBlog } = useContext(BlogContext);
   const { changeManipulatebox } = useContext(ComponentContext);
+  useEffect(()=>{
+    AOS.init({
+      duration:2000
+    });
+  },[])
   return (
-    <BlogItem>
+    <BlogItem data-aos="fade-up"
+    data-aos-duration="3000">
       <div className="imgSection">
         {localStorage.getItem("isAdmin") && (
           <div className="blogManipulationIcons">

@@ -11,10 +11,9 @@ export const ErrorSection = styled.section`
     justify-content: center;
     align-items: center;
     gap: 20px;
-    text-wrap: wrap;
   }
   .ErrorTextBox h1 {
-    color: white;
+    color: ${({theme})=>theme.colors.normalTxt};
     font-size: 5rem;
     font-family: "Lato", sans-serif;
   }
@@ -24,7 +23,7 @@ export const ErrorSection = styled.section`
   .ErrorTextBox p {
     font-family: "Lato", sans-serif;
     font-size: 2rem;
-    color: white;
+    color: ${({theme})=>theme.colors.normalTxt};
   }
   .ErrorTextBox p a {
     color: ${({theme})=>theme.colors.sptxt};
@@ -34,4 +33,5 @@ export const ErrorSection = styled.section`
      .ErrorTextBox h1 {
       font-size:3rem;
   }
+}
 `;

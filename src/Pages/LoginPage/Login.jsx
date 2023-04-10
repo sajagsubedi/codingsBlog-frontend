@@ -7,7 +7,6 @@ const Login = () => {
   const { login } = useContext(AuthContext);
   const [formData, setFormData] = useState({ email: "", password: "" });
   const navigate = useNavigate();
-
   //function to handle change in formdata
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -15,7 +14,7 @@ const Login = () => {
   //function to  handleSubmit and login
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const resp = await login(formData);
+    let resp = await login(formData);
     if (resp) {
       navigate("/");
     }

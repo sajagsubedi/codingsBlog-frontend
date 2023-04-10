@@ -4,7 +4,8 @@ import { GlobalContext, AuthContext, ComponentContext } from "../index";
 export default function AuthState(props) {
   const { host } = useContext(GlobalContext);
   const { showAlert } = useContext(ComponentContext);
-  const [user, setUser] = useState({ name: "", email: "" });
+  const defUser = { name: "", email: "" };
+  const [user, setUser] = useState(defUser);
   //function to login
   const login = async (data) => {
     let response = await fetch(`${host}/api/auth/login`, {
@@ -17,13 +18,14 @@ export default function AuthState(props) {
     response = await response.json();
     if (!response.success) {
       showAlert("Please enter correct cedentials", "Error");
-      return;
+      return false;
     }
     localStorage.setItem("token", response.authToken);
     if (response.type == "admin") {
       localStorage.setItem("isAdmin", true);
     }
     showAlert("Logged in succesfully", "success");
+    return true;
   };
 
   //function to signup
@@ -38,9 +40,10 @@ export default function AuthState(props) {
     response = await response.json();
     if (!response.success) {
       showAlert("Please enter correct cedentials", "Error");
-      return;
+      return false;
     }
     localStorage.setItem("token", response.authToken);
+    showAlert("Created a new user successfully", "success");
     return true;
   };
 
@@ -53,16 +56,17 @@ export default function AuthState(props) {
         auth_token: localStorage.getItem("token"),
       },
     });
-    response =await response.json();
+    response = await response.json();
     if (!response.success) {
       return false;
     }
-setUser(response.user[0])
-console.log(response);
+    setUser(response.user[0]);
   };
 
   return (
-    <AuthContext.Provider value={{ login, signup,user,fetchProfile }}>
+    <AuthContext.Provider
+      value={{ login, signup, user, setUser, defUser, fetchProfile }}
+    >
       {props.children}
     </AuthContext.Provider>
   );

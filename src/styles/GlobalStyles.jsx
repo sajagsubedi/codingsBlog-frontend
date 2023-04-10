@@ -2,16 +2,21 @@ import { createGlobalStyle } from "styled-components";
 export default createGlobalStyle`
 @import url("https://fonts.googleapis.com/css2?family=Baloo+Bhaina+2&family=Baloo+Thambi+2&family=Open+Sans:ital@1&family=Poppins:ital,wght@1,300;1,400&display=swap");
 
-:root {
-   --main-bg-color: #000;
-   --white-shade: #fff;
-}
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: "Ubuntu", sans-serif;
+}
+html{
+  scroll-behavior: smooth;
+}
+body{
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+body::-webkit-scrollbar{
+display: none;
 }
 
 header {
@@ -19,19 +24,19 @@ header {
     height:60px;
     font-family: "Baloo Bhaina 2", cursive;
     position: sticky;
-top:0;
+    top:0;
     z-index:4;
 }
   .navigation {
     width: 100%;
-    position:sticky;
+    position:fixed;
     height:60px;
     display: flex;
     justify-content: space-between;
     background-color: ${({ theme }) => theme.colors.themecolor};
     box-shadow: 0 25px 10px ${({ theme }) => theme.colors.blackShade};
-    padding-bottom:10px;
-   transition: height 0.5s, width 0.5s;
+    padding:auto auto 10px 10px;
+    transition: height 0.5s, width 0.5s;
     transition-delay: 0s, 0.75s;
   }
 .navigation.active {
@@ -46,13 +51,12 @@ top:0;
     justify-content: space-between;
 }
 .navigation .appnameBx .appname {
-    white-space: nowrap;
-    color: white;
+    ${({ theme }) => theme.colors.normalTxt}-space: nowrap;
+    color: ${({ theme }) => theme.colors.normalTxt};
     text-decoration:none;
     font-size: 1.4em;
     font-weight: bold;
 }
-
 nav {
     display: flex;
     width: 100%;
@@ -62,7 +66,6 @@ nav {
     align-items: right;
     position: sticky;
 }
-
 .nav-links {
     width: 80%; 
 }
@@ -83,7 +86,6 @@ nav {
     justify-content: center;
     margin: 20px;
 }
-
 .menu li a {
     text-decoration: none;
     font-size: 1em;
@@ -93,8 +95,8 @@ nav {
     justify-content:center;
     align-items:center;
 }
-.active {
-    color: var(--white-shade) !important;
+.activeTxt {
+    color: ${({ theme }) => theme.colors.normalTxt}!important;
 }
 .menu li a:hover {
     color: ${({ theme }) => theme.colors.secondaryTheme};
@@ -106,7 +108,7 @@ nav {
     display:none;
     min-width: 120px;
     padding:5px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2)
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     font-family:Roboto;
   }
   .Header .Navbar .menu .categoryDropDown ul{
@@ -127,35 +129,31 @@ nav {
     align-items: center;
     cursor: pointer;
 }
-
 .navigation .menuToggle::before {
     content: "";
     position: absolute;
     width: 32px;
     height: 2px;
-    background: var(--white-shade);
+    background: ${({ theme }) => theme.colors.normalTxt};
     transform: translateY(-10px);
-    box-shadow: 0 10px var(--white-shade);
+    box-shadow: 0 10px ${({ theme }) => theme.colors.normalTxt};
     transition: 0.5s;
 }
-
 .navigation.active .menuToggle::before {
     content: "";
     transform: translateY(0px) rotate(45deg);
     box-shadow: 0 0 ${({ theme }) => theme.colors.secondaryTheme};
     background: ${({ theme }) => theme.colors.secondaryTheme};
 }
-
 .navigation .menuToggle::after {
     content: "";
     position: absolute;
     width: 32px;
     height: 2px;
-    background: var(--white-shade);
+    background: ${({ theme }) => theme.colors.normalTxt};
     transform: translateY(10px);
     transition: 0.5s;
 }
-
 .navigation.active .menuToggle::after {
     transform: translateY(0px) rotate(-45deg);
     box-shadow: 0 0 ${({ theme }) => theme.colors.secondaryTheme};
@@ -167,7 +165,7 @@ nav {
     margin:10px 0px 20px;
     justify-content:center;
     text-align: center;
-    color:white;
+    color:${({ theme }) => theme.colors.normalTxt};
 }
 .sm{
     font-size:1.5rem;
@@ -180,7 +178,7 @@ nav {
 }
 .SearchButton {
     padding: 7px !important;
-    color: white !important;
+    color: ${({ theme }) => theme.colors.normalTxt} !important;
     border: none;
     border-radius: 5px;
     font-weight: bold;
@@ -193,12 +191,12 @@ nav {
 .SearchInput{
     padding: 7px !important;
     border-radius: 5px;
-    border:1px solid white;
-    color:white;
+    border:1px solid ${({ theme }) => theme.colors.normalTxt};
+    color:${({ theme }) => theme.colors.normalTxt};
     background:transparent;
 }
 .SearchInput::placeholder{
-    color:white;
+    color:${({ theme }) => theme.colors.normalTxt};
 }
 .spinner{
     display:flex;
@@ -211,7 +209,7 @@ nav {
 .PrimaryButton{
     padding: 7px !important;
 background: ${({ theme }) => theme.colors.secondaryTheme};
-color: white !important;
+color: ${({ theme }) => theme.colors.normalTxt} !important;
 border: none;
 border-radius: 5px;
 font-weight: bold;
@@ -221,9 +219,8 @@ font-weight: bold;
 }
 .PrimaryInput{
     background: #1F2937; 
-    background-opacity: 0.4; 
     line-height: 2rem;
-    color: #F3F4F6;
+    color: ${({ theme }) => theme.colors.normalTxt} !important;
     border: 1px solid #374151;
     padding:3px;
     font-size: 1rem;
@@ -233,8 +230,8 @@ font-weight: bold;
 }
 .PrimaryInput:focus{
   background: ${({ theme }) => theme.colors.themecolor}; 
- border-color: ${({ theme }) => theme.colors.secondaryTheme};
-    box-shadow: 3px 3px 3px ${({ theme }) => theme.colors.bordershade},
+  border-color: ${({ theme }) => theme.colors.secondaryTheme};
+  box-shadow: 3px 3px 3px ${({ theme }) => theme.colors.bordershade},
       -3px -3px 3px ${({ theme }) => theme.colors.bordershade};
   }
 .globalForm {
@@ -250,7 +247,7 @@ font-weight: bold;
   
   .formBelowBox{
     text-align:right;
-    color:white;
+    color:${({ theme }) => theme.colors.normalTxt};
   }
   .formBelowBox a{
   color:${({ theme }) => theme.colors.sptxt};
@@ -258,7 +255,8 @@ font-weight: bold;
   .footer{
     background:${({ theme }) => theme.colors.themecolor};
     padding:20px;
-    color:white;
+    color:${({ theme }) => theme.colors.normalTxt};
+    margin: 0px;
     font-family:'Lato',"sans-serif";
     display:flex;
     justify-content:center;
@@ -267,18 +265,18 @@ font-weight: bold;
     }
     
     .manipulateBlogSection{
-    position:absolute;
+    color: #fff;
+    position:fixed;
     width: 50vw;
-  left: 50%;
-  top:5px;
-  z-index:3;
-  padding: 5px 50px 30px;
-  transform: translate(-50%, 0);
-  border-radius: 10px;
-  background: ${({ theme }) => theme.colors.focus};
-  box-shadow: 2px 10px 10px ${({ theme }) => theme.colors.blackShade};
+    left: 50%;
+    top:5px;
+    z-index:3;
+    padding: 5px 50px 30px;
+    transform: translate(-50%, 0);
+    border-radius: 10px;
+    background: ${({ theme }) => theme.colors.focus};
+    box-shadow: 2px 10px 10px ${({ theme }) => theme.colors.blackShade};
     }
-  position: fixed;
   .Close {
     display: flex;
     justify-content: flex-end;
@@ -294,7 +292,9 @@ font-weight: bold;
   display:flex;
   justify-content:flex-end;
   }
-  
+  .globalSection{
+    background:${({ theme }) => theme.colors.themecolor};
+  }
 @media (max-width: ${({ theme }) => theme.resposiveBreakPoints.mobile}) {
     .navigation {
       flex-direction: column;
@@ -334,6 +334,7 @@ font-weight: bold;
   padding: 5px;
     width: 90vw;
   }
-}
-
-`;
+  .footer{
+    font-size: 1.3rem;
+  }
+}`;

@@ -1,21 +1,34 @@
-import React, { useEffect, useContext, useRef } from "react";
+import React, { useEffect, useContext } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { BlogContext,ComponentContext } from "../context/index";
+import { AuthContext, BlogContext, ComponentContext } from "../context/index";
 import { AiOutlineSearch } from "react-icons/ai";
 import { RiArrowDropDownLine } from "react-icons/ri";
 const Header = () => {
-  const { setQuery, query, getBlogs } = useContext(BlogContext);
-  const {showAlert} = useContext(ComponentContext)
+  const { setQuery, query, getBlogs, setIsQuery } = useContext(BlogContext);
+  const { showAlert } = useContext(ComponentContext);
+  const { setUser, defUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const offFunc = () => {
     const navigation = document.getElementById("navigation");
     navigation.classList.remove("active");
+    setIsQuery(false);
+    window.scrollTo(0, 0);
   };
   const HeaderOff = () => {
     const anchorTags = document.querySelectorAll(".menu li .nav-link");
+    let categoryTags = document.querySelectorAll(
+      ".menu li .categoryDropDown .nav-link"
+    );
     for (let i = 0; i < anchorTags.length; i++) {
       anchorTags[i].addEventListener("click", offFunc);
     }
+    categoryTags.forEach((tags) => {
+      tags.addEventListener("click", () => {
+        document
+          .getElementById("categorydropdown")
+          .classList.remove("dropdownActive");
+      });
+    });
   };
   const ToggleMenu = () => {
     const navigation = document.getElementById("navigation");
@@ -24,8 +37,9 @@ const Header = () => {
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("isAdmin");
+    setUser(defUser);
     navigate("/");
-    showAlert("Logged out successfully","success")
+    showAlert("Logged out successfully", "success");
   };
   useEffect(HeaderOff, []);
   const handleSearchChange = (e) => {
@@ -53,7 +67,7 @@ const Header = () => {
                 <li>
                   <Link
                     className={` ${
-                      useLocation().pathname == "/" ? "active" : ""
+                      useLocation().pathname == "/" ? "activeTxt" : ""
                     } nav-link`}
                     to="/"
                   >
@@ -65,13 +79,13 @@ const Header = () => {
                     onClick={(e) => {
                       e.preventDefault();
                       document
-                        .getElementById("dropdownBtn")
+                        .getElementById("categorydropdown")
                         .classList.toggle("dropdownActive");
                     }}
                   >
                     Categories <RiArrowDropDownLine />
                   </Link>
-                  <div id="dropdownBtn" className="categoryDropDown">
+                  <div id="categorydropdown" className="categoryDropDown">
                     <ul>
                       <li>
                         <Link className="nav-link" to="/general">
@@ -101,7 +115,7 @@ const Header = () => {
                     <li>
                       <Link
                         className={` ${
-                          useLocation().pathname == "/profile" ? "active" : ""
+                          useLocation().pathname == "/profile" ? "activeTxt" : ""
                         } nav-link`}
                         to="/profile"
                       >
@@ -120,7 +134,7 @@ const Header = () => {
                 ) : (
                   <>
                     <li>
-                      <Link className="PrimaryButton active" to="/login">
+                      <Link className="PrimaryButton" to="/login">
                         Login
                       </Link>
                     </li>
@@ -139,7 +153,13 @@ const Header = () => {
                   onChange={handleSearchChange}
                   placeholder="Enter text to search"
                 />
-                <button onClick={() => getBlogs()} className="SearchButton">
+                <button
+                  onClick={async () => {
+                    await setIsQuery(true);
+                    getBlogs();
+                  }}
+                  className="SearchButton"
+                >
                   <AiOutlineSearch />
                 </button>
               </div>

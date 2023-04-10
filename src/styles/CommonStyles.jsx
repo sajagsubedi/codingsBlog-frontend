@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const AlertSection = styled.section`
-  color: white;
+  color: ${({theme})=>theme.colors.normalTxt};
   height: 45px;
   position: absolute;
   div {
@@ -37,7 +37,7 @@ export const FormSection = styled.section`
     flex-direction: column;
   }
   form  label {
-    color: white;
+    color: ${({theme})=>theme.colors.normalTxt};
   }
   form .PrimaryButton {
     padding: 10px !important;
@@ -46,3 +46,22 @@ export const FormSection = styled.section`
     line-height: 2rem !important;
   }
 `;
+
+export const ScrollToTop=styled.button`
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  border:none;
+  border-radius: 6px;
+  padding: 7px;
+  background-color:${({theme})=>theme.colors.secondaryTheme};
+  color:${({theme})=>theme.colors.normalTxt};
+  height: 35px;
+  width:35px;
+  font-size: larger;
+  z-index: 99;
+  font-weight: bolder;
+  position: fixed;
+  bottom:10px;
+  right: 10px;
+`

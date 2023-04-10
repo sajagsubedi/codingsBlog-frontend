@@ -2,11 +2,11 @@ import styled from "styled-components";
 
 export const HeroSection = styled.section`
   padding: 70px 50px;
-  height: 80vh;
+  height: calc(100vh - 60px);
   display: flex;
   flex-direction: column;
+  position:relative;
   background: url(../../banner.jpg) no-repeat center center/cover;
-
   @media (max-width: ${({ theme }) => theme.resposiveBreakPoints.mobile}) {
     height: 90vh;
     padding: 5vh;
@@ -20,6 +20,7 @@ export const HeroTitle = styled.h1`
   font-family: "Anybody", cursive;
   background: linear-gradient(to right, #ff9966, #ff5e62, #ff9966, #ff5e62);
   -webkit-text-fill-color: transparent;
+  background-clip: text;
   -webkit-background-clip: text;
   @media (max-width: ${({ theme }) => theme.resposiveBreakPoints.mobile}) {
     font-size: 2rem;
@@ -43,7 +44,6 @@ export const HeroParaBox = styled.div`
   padding: 10px;
   margin: 10px;
   width: 60%;
-  text-wrap: wrap;
   @media (max-width: ${({ theme }) => theme.resposiveBreakPoints.mobile}) {
     width: auto;
   }
@@ -69,8 +69,13 @@ export const Blogs = styled.section`
   flex-direction: column;
   margin: auto;
   padding: 20px;
-  color: white;
+  color: ${({theme})=>theme.colors.normalTxt};
   border-radius: 20px;
+  overflow-y: hidden;
+  overflow-x: hidden;
+.infinite-scroll-component{
+  overflow-y: hidden !important;
+}
   @media (max-width: ${({ theme }) => theme.resposiveBreakPoints.mobile}) {
     min-height: 50vh;
     width: 90vw;
@@ -86,11 +91,11 @@ export const BlogItem = styled.div`
   overflow: hidden;
   margin: 10px 10px 25px;
   border-radius: 25px;
+ 
   &:nth-child(even) {
     flex-direction: row-reverse;
   }
   .BlogBody {
-    text-wrap: wrap;
   }
   .date {
     color: gray;

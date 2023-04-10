@@ -7,22 +7,38 @@ import {
   GlobalContext,
   ComponentContext,
 } from "../../../context/index";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 export default function BlogSection(props) {
-  const { blogs, getBlogs, category, setCategory,setQuery,query } = useContext(BlogContext);
+  const {
+    blogs,
+    getBlogs,
+    category,
+    setCategory,
+    query,
+    setQuery,
+    fetchMoreBlogs,
+    setPage,
+    isQuery,
+    setIsQuery,
+  } = useContext(BlogContext);
   const { changeManipulatebox, initialValue } = useContext(ComponentContext);
   const { loading, isAdmin } = useContext(GlobalContext);
-  
+
   useEffect(() => {
+    setQuery("");
     window.scrollTo(0, 0);
     setCategory(props.category);
+    setPage(1);
   }, [props.category]);
+  useEffect(() => {
+    getBlogs();
+  }, [isQuery]);
   useEffect(() => {
     getBlogs();
   }, [category]);
   return (
     <Blogs>
-      {loading && <Spinner />}
       {!loading && localStorage.getItem("isAdmin") && (
         <div className="addBlogIcon">
           <button
@@ -34,13 +50,22 @@ export default function BlogSection(props) {
         </div>
       )}
       {!loading && <h1 className="mainText">Blogs</h1>}
-      {!loading && blogs.blogs.length == 0 ? (
-        <h1 className="mainText">No blogs found</h1>
-      ) : (
-        blogs.blogs.map((element) => {
-          return <BlogComponent blogData={element} key={element._id} />;
-        })
-      )}
+      {loading && <Spinner />}
+      <InfiniteScroll
+        className="infinite-scroll-component"
+        dataLength={blogs.blogs.length}
+        next={fetchMoreBlogs}
+        hasMore={blogs.blogs.length !== blogs.TotalResults}
+        loader={<Spinner />}
+      >
+        {!loading && blogs.blogs.length == 0 ? (
+          <h1 className="mainText">No blogs found</h1>
+        ) : (
+          blogs.blogs.map((element) => {
+            return <BlogComponent blogData={element} key={element._id} />;
+          })
+        )}
+      </InfiniteScroll>
     </Blogs>
   );
 }

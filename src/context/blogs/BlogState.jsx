@@ -2,28 +2,36 @@ import { useState, useContext } from "react";
 import { BlogContext, GlobalContext, ComponentContext } from "../index";
 
 export default function BlogState(props) {
-  const [blogs, setBlogs] = useState({ blogs: [] });
-  const [category, setCategory] = useState();
-  const { host, setProgress, setLoading } = useContext(GlobalContext);
-  const { showAlert } = useContext(ComponentContext);
+  //states
+  const [blogs, setBlogs] = useState({ TotalResults: 0, blogs: [] });
   const [globalBlogs, setGlobalBlogs] = useState({ blogs: [] });
   const [query, setQuery] = useState("");
   const [comments, setComments] = useState([]);
   const [commentDescription, setCommentDescription] = useState("");
+  const [page, setPage] = useState(1);
+  const [pagesize, setPagesize] = useState(4);
+  const [isQuery, setIsQuery] = useState(true);
+
+  //function and values imported from context
+  const [category, setCategory] = useState();
+  const { host, setProgress, setLoading } = useContext(GlobalContext);
+  const { showAlert } = useContext(ComponentContext);
 
   //function to fetch blogs
   const getBlogs = async () => {
+    setQuery("")
     setLoading(true);
     setProgress(20);
-    let url = `${host}/api/blogs/fetchallblogs`;
-    if (category && query.length == 0) {
-      url = url + "?category=" + category;
-    } else if (!category && query.length !== 0) {
-      url = url + "?query=" + query;
-    } else if (category && query.length !== 0) {
-      url = url + "?category=" + category + "&query=" + query;
+    let url = `${host}/api/blogs/fetchallblogs?page=1&pagesize=${pagesize}`;
+
+    //adding category to the url if it exists
+    if (category) {
+      url = url + "&category=" + category;
     }
-    setQuery("");
+    //adding query to the url if it exists
+    if (query.length !== 0) {
+      url = url + "&query=" + query;
+    }
     setProgress(30);
     let response = await fetch(url);
     setProgress(70);
@@ -34,13 +42,30 @@ export default function BlogState(props) {
     setLoading(false);
   };
 
+  //function to fetch more blogs infinite scroll
+  const fetchMoreBlogs = async () => {
+    let url = `${host}/api/blogs/fetchallblogs?page=${
+      page + 1
+    }&pagesize=${pagesize}`;
+
+    //adding category to the url if it exists
+    if (category) {
+      url = url + "&category=" + category;
+    }
+    let response = await fetch(url);
+    response = await response.json();
+    setBlogs({ ...response, blogs: blogs.blogs.concat(response.blogs) });
+    setPage(page + 1);
+  };
+
   //function to fetch global blogs
   const fetchGlobalBlogs = () => {
-    fetch(`${host}/api/blogs/fetchallblogs?pagesize=10000000`)
+    fetch(`${host}/api/blogs/fetchallblogs`)
       .then((data) => data.json())
       .then((response) => setGlobalBlogs(response));
   };
 
+  //function to update blog
   const updateBlog = async (id, newBlog) => {
     let response = await fetch(`${host}/api/blogs/updateblog/${id}`, {
       method: "PUT",
@@ -118,8 +143,27 @@ export default function BlogState(props) {
       return showAlert(response.msg, "Error");
     }
     setComments(comments.concat(response.Comment));
-    showAlert(response.msg,"success")
-    setCommentDescription("")
+    showAlert(response.msg, "success");
+    setCommentDescription("");
+  };
+
+  //function to delete  comment
+  const deleteComment = async (id) => {
+    let url = `${host}/api/comment/delete/${id}`;
+    let response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        auth_token: localStorage.getItem("token"),
+      },
+    });
+    response = await response.json();
+    if (!response.success) {
+      showAlert(response.msg, "Error");
+      return;
+    }
+    let newComments = comments.filter((data) => data._id !== id);
+    setComments(newComments);
+    showAlert(response.msg, "success");
   };
   return (
     <BlogContext.Provider
@@ -140,6 +184,11 @@ export default function BlogState(props) {
         commentDescription,
         setCommentDescription,
         addComment,
+        deleteComment,
+        fetchMoreBlogs,
+        setPage,
+        isQuery,
+        setIsQuery,
       }}
     >
       {props.children}
