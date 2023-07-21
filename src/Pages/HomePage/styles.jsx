@@ -124,7 +124,7 @@ export const BlogItem = styled.div`
     font-family: "Lato", sans-serif;
   }
   .paragraphSection .linkToBlog {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     text-decoration: none;
     color: ${({ theme }) => theme.colors.sptxt};
     font-family: "sans-serif";
