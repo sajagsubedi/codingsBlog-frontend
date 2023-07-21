@@ -19,7 +19,8 @@ export default function BlogState(props) {
 
   //function to fetch blogs
   const getBlogs = async () => {
-    setQuery("")
+    setPage(1);
+    setQuery("");
     setLoading(true);
     setProgress(20);
     let url = `${host}/api/blogs/fetchallblogs?page=1&pagesize=${pagesize}`;
