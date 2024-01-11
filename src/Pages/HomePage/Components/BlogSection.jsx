@@ -31,7 +31,6 @@ export default function BlogSection() {
     window.scrollTo(0, 0);
     setCategory(routerCategory);
     setPage(1);
-    console.log(routerCategory)
   }, [routerCategory]);
   useEffect(() => {
     getBlogs();
