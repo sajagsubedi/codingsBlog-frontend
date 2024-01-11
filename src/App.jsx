@@ -16,7 +16,7 @@ import { ThemeProvider } from "styled-components";
 
 export default function App() {
   const { globalBlogs, fetchGlobalBlogs } = useContext(BlogContext);
-  const { progress, categories, theme } = useContext(GlobalContext);
+  const { progress, theme } = useContext(GlobalContext);
   useEffect(() => {
     fetchGlobalBlogs();
   }, []);
@@ -34,32 +34,21 @@ export default function App() {
           <Header />
           <Alert />
           <Routes>
-            <Route exact path="/" element={<Home />} />
+            <Route exact path="/" element={<Home fetchType="static" />} />
 
             <Route exact path="login" element={<Login />} />
             <Route exact path="signup" element={<Signup />} />
             <Route exact path="profile" element={<Profile />} />
-
-            {globalBlogs.blogs.map((data) => {
-              return (
                 <Route
                   exact
-                  path={`${data.category}/${data._id}`}
-                  element={<BlogsPage blogData={data} />}
-                  key={data._id}
+                  path="/:category/:blogId/"
+                  element={<BlogsPage/>}
                 />
-              );
-            })}
-            {categories.map((data, i) => {
-              return (
                 <Route
                   exact
-                  path={data}
-                  element={<Home category={data} />}
-                  key={i}
+                  path="/:category"
+                  element={<Home fetchType="dynamic"/>}
                 />
-              );
-            })}
             <Route exact path="*" element={<ErrorPage />} />
           </Routes>
           <Footer />

@@ -4,13 +4,13 @@ import ManipulateBlog from "./Components/ManipulateBlog";
 import { useContext, useEffect } from "react";
 import { ComponentContext } from "../../context/index";
 
-const Home = ({ category }) => {
+const Home = () => {
   const { manipulatebox } = useContext(ComponentContext);
   return (
     <main>
      { manipulatebox&&<ManipulateBlog/>}
       <Hero />
-      <BlogSection category={category} />
+      <BlogSection/>
     </main>
   );
 };

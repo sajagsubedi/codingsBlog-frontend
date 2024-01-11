@@ -88,6 +88,11 @@ export default function BlogState(props) {
     setBlogs({ ...blogs, blogs: upadatedBlogs });
   };
 
+const fetchSingleBlog=async(id)=>{
+  let response=await fetch(`${host}/api/blogs/blog/${id}`);
+  response=await response.json();
+  return response;
+}
   const addBlog = async (newBlog) => {
     const { Title, Description, category, imgUrl, SubTitle } = newBlog;
     let response = await fetch(`${host}/api/blogs/addblog`, {
@@ -190,6 +195,7 @@ export default function BlogState(props) {
         setPage,
         isQuery,
         setIsQuery,
+        fetchSingleBlog
       }}
     >
       {props.children}

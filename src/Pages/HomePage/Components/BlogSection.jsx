@@ -1,6 +1,7 @@
 import BlogComponent from "./BlogComponent.jsx";
 import { Spinner } from "../../../Components/index";
 import { useContext, useEffect } from "react";
+import {useParams} from "react-router-dom"
 import { Blogs } from "../styles";
 import {
   BlogContext,
@@ -9,7 +10,7 @@ import {
 } from "../../../context/index";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-export default function BlogSection(props) {
+export default function BlogSection() {
   const {
     blogs,
     getBlogs,
@@ -24,13 +25,14 @@ export default function BlogSection(props) {
   } = useContext(BlogContext);
   const { changeManipulatebox, initialValue } = useContext(ComponentContext);
   const { loading, isAdmin } = useContext(GlobalContext);
-
+  const {category:routerCategory}=useParams()
   useEffect(() => {
     setQuery("");
     window.scrollTo(0, 0);
-    setCategory(props.category);
+    setCategory(routerCategory);
     setPage(1);
-  }, [props.category]);
+    console.log(routerCategory)
+  }, [routerCategory]);
   useEffect(() => {
     getBlogs();
   }, [isQuery]);
